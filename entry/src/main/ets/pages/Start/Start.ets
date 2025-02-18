@@ -1,4 +1,5 @@
 import { AdvertClass } from 'basic'
+import window from '@ohos.window'
 
 @Entry
 @Component
@@ -18,12 +19,17 @@ struct Start {
    this.timer = setInterval(() => {
       if (this.adObj.adTime === 0) {
         clearInterval(this.timer)
+        this.closeWin()
         return
       }
       this.adObj.adTime--
     },1000)
 
   }
+  closeWin(){
+    window.findWindow("ad_window").destroyWindow()
+  }
+
 
   aboutToDisappear(): void {
     clearInterval(this.timer)
@@ -32,13 +38,17 @@ struct Start {
   build() {
     Stack({alignContent: Alignment.TopEnd}){
       Image($r('app.media.start')).objectFit(ImageFit.Cover)
-      Text(this.adObj.adTime + '秒后跳过')
+      Text( this.adObj.adTime + '秒后跳过')
         .padding(8)
         .fontSize(14)
         .height(30)
         .borderRadius(15)
         .backgroundColor($r('app.color.background_page'))
-        .margin({right: 14})
+        .margin({right: 14,top: 20})
+        .onClick(() => {
+          this.closeWin()
+        })
+
     }
     .height('100%')
     .width('100%')
