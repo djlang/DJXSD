@@ -15,7 +15,6 @@ struct Start {
 
   aboutToAppear(): void {
     const setting = new UserSettingClass(getContext())
-    console.log('=====<,',JSON.stringify(setting.getUserAd()))
     this.adObj = setting.getUserAd() as AdvertClass
 
     this.countDown()

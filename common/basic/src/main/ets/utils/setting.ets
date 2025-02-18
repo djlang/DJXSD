@@ -3,9 +3,11 @@
 import { preferences } from "@kit.ArkData";
 import { AdvertClass } from "../models/Advert";
 import { JSON } from "@kit.ArkTS";
+import { XSD_SETTING, XSD_SETTING_AD } from "../constants";
+
 
 export const defaultAd: AdvertClass = {
-  adTime : 6,
+  adTime : 1,
   showAd: true,
   adImage: $r('app.media.start')
 }
@@ -24,13 +26,13 @@ export class UserSettingClass {
   }
   //创建仓库
   getStore(){
-    return preferences.getPreferencesSync(this.context, {name: "setting"})
+    return preferences.getPreferencesSync(this.context, {name: XSD_SETTING})
   }
   //存储广告页数据
   setUserAd(ad: AdvertClass) {
     const store = this.getStore()
     //存储数据
-    store.putSync("setting_ad",JSON.stringify(ad))
+    store.putSync(XSD_SETTING_AD,JSON.stringify(ad))
     //写入磁盘
     store.flush()
   }
@@ -40,7 +42,7 @@ export class UserSettingClass {
     //获取仓库
     const store = this.getStore()
     //获取广告数据
-    return JSON.parse(store.getSync("setting_ad", JSON.stringify(defaultAd)) as string)
+    return JSON.parse(store.getSync(XSD_SETTING_AD, JSON.stringify(defaultAd)) as string)
   }
 
 }
