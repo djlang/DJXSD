@@ -3,5 +3,5 @@ export class  AdvertClass {
   adTime: number = 0
   showAd: boolean = false
   adUrl?: string = ""
-  adImage?: string = ""
+  adImage?: ResourceStr = ""
 }

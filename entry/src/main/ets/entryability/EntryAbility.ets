@@ -1,6 +1,7 @@
 import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
+import { AdvertClass, defaultAd, UserSettingClass } from 'basic';
 
 const DOMAIN = 0x0000;
 
@@ -17,10 +18,23 @@ export default class EntryAbility extends UIAbility {
   async onWindowStageCreate(windowStage: window.WindowStage): Promise<void> {
     // Main window is created, set main page for this ability
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
-    // windowStage.loadContent('pages/Index', (err) => {
-   const  win = await windowStage.createSubWindow("ad_window")
-    await win.showWindow()
-    win.setUIContent("pages/Start/Start")
+
+    //进入应用时调用启动广告页配置
+    const ad = await new Promise<AdvertClass>((resolve) => {
+      setTimeout(() => {
+        resolve(defaultAd);
+      }, 500);
+    })
+
+    const setting = new UserSettingClass(this.context)
+    setting.setUserAd(ad)
+
+    if(ad.showAd){
+      const  win = await windowStage.createSubWindow("ad_window")
+      await win.showWindow()
+      win.setUIContent("pages/Start/Start")
+    }
+
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {
         hilog.error(DOMAIN, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err));

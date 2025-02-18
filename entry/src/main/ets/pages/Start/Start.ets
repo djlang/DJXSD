@@ -1,18 +1,24 @@
-import { AdvertClass } from 'basic'
-import window from '@ohos.window'
+import { AdvertClass, UserSettingClass } from 'basic'
+import { window } from '@kit.ArkUI'
+import { JSON } from '@kit.ArkTS'
 
 @Entry
 @Component
 struct Start {
-  @State adObj: AdvertClass = {
-    adTime: 5,
-    showAd: false
-  }
+  // @State adObj: AdvertClass = {
+  //   adTime: 5,
+  //   showAd: false,
+  //   adImage: $r("app.media.start")
+  // }
+  @State adObj: AdvertClass = {} as AdvertClass
   @State timer: number = -1
 
   aboutToAppear(): void {
-    this.countDown()
+    const setting = new UserSettingClass(getContext())
+    console.log('=====<,',JSON.stringify(setting.getUserAd()))
+    this.adObj = setting.getUserAd() as AdvertClass
 
+    this.countDown()
   }
 
   countDown() {
