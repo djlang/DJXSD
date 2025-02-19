@@ -3,7 +3,7 @@
 import { preferences } from "@kit.ArkData";
 import { AdvertClass } from "../models/Advert";
 import { JSON } from "@kit.ArkTS";
-import { XSD_SETTING, XSD_SETTING_AD } from "../constants";
+import { TOKEN_KEY, XSD_SETTING, XSD_SETTING_AD } from "../constants";
 
 
 export const defaultAd: AdvertClass = {
@@ -43,6 +43,20 @@ export class UserSettingClass {
     const store = this.getStore()
     //获取广告数据
     return JSON.parse(store.getSync(XSD_SETTING_AD, JSON.stringify(defaultAd)) as string)
+  }
+
+  setUserToken(token: string) {
+    const store = this.getStore()
+    //存储数据
+    store.putSync(TOKEN_KEY,JSON.stringify(token))
+    //写入磁盘
+    store.flush()
+
+  }
+
+  getUserToken(): string{
+    const store = this.getStore()
+    return store.getSync(TOKEN_KEY, "") as string
   }
 
 }
