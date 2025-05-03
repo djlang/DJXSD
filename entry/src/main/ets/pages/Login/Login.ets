@@ -26,16 +26,12 @@ struct Login {
     try {
       const  res = await loginApi(this.accountForm)
 
-      AlertDialog.show({
-        message: JSON.stringify(res)
-      })
-
       //调用首选项存储登录token
       const setting = new UserSettingClass(getContext())
       setting.setUserToken(res)
 
       router.pushUrl({
-        url: 'pages/Index'
+        url: 'pages/Index/Index'
       })
 
     } catch (e) {

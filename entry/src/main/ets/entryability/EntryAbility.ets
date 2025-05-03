@@ -35,7 +35,7 @@ export default class EntryAbility extends UIAbility {
       win.setUIContent("pages/Start/Start")
     }
 
-    let pageUrl = setting.getUserToken() ? 'pages/Index' : 'pages/Login/Login'
+    let pageUrl = setting.getUserToken() ? 'pages/Index/Index' : 'pages/Login/Login'
 
     windowStage.loadContent(pageUrl, (err) => {
       if (err.code) {

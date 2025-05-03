@@ -1,6 +1,5 @@
 import { AdvertClass, UserSettingClass } from 'basic'
 import { window } from '@kit.ArkUI'
-import { JSON } from '@kit.ArkTS'
 
 @Entry
 @Component
